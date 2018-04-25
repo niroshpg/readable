@@ -1,16 +1,15 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  background-color: #08a;
+  height: 50px;
+  padding: 30px;
   color: white;
 }
 
@@ -22,7 +21,220 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+
+/* Createposts */
+
+.close-create-posts {
+  display: block;
+  width: 60px;
+  height: 60px;
+  background-image: url('../icons/arrow-back.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  font-size: 0;
+}
+
+.create-posts-form {
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.create-posts-details {
+  margin-left: 20px;
+}
+
+.create-posts-avatar-input {
+  min-width: 60px;
+  height: 60px;
+  background-color: white;
+  background-image: url('../icons/person.svg');
+  background-size: 32px 32px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+}
+
+.create-posts-details input {
+  width: 100%;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  font-size: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: 0;
+}
+
+
+.create-posts-details button {
+  margin-top: 20px;
+  background: #ccc;
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: inherit;
+  border: none;
+  outline: 0;
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+/* List categories */
+.list-categories {
+  position: fixed;
+  width: 100%;
+  top: 30;
+    background: white;
+  border-bottom: 1px solid #d5d8df;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.categories-list {
+  background: white;
+  margin: 0;
+  padding: 0 0 0 10px;
+  list-style-type: none;
+  display: flex;
+}
+
+.categories-list-item {
+  position: relative;
+  padding: 10px;
+    margin: 10px;
+  background: #d5d8df;
+
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Listposts */
+
+.list-posts {
+  padding-top: 50px;
+}
+.posts-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.posts-list-item {
+  padding: 30px;
+  background: white;
+  display: flex;
+}
+
+@media (min-width: 600px) {
+  .posts-list-item {
+    margin: 20px;
+    border: 1px solid #d5d8df;
+    border-radius: 4px;
+  }
+}
+
+
+.list-posts-top {
+  position: fixed;
+  width: 100%;
+  top: 30;
+  border-bottom: 1px solid #d5d8df;
+  display: flex;
+}
+
+.search-posts {
+  width: 100%;
+  padding: 20px 20px 20px 60px;
+  background-image: url('../icons/search.svg');
+  background-repeat: no-repeat;
+  background-position: 20px center;
+  background-size: 1.2em;
+  font-size: 1.2em;
+  border: 0;
+  outline: none;
+}
+
+.add-posts {
+  display: block;
+  width: 73px;
+  background: white;
+  background-image: url('../icons/person-add.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28px;
+  font-size: 0;
+}
+
+.showing-posts {
+  text-align: center;
+  margin: 20px 0;
+}
+.showing-posts button {
+  color: blue;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+
+.posts-avatar {
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.posts-details {
+  padding-left: 20px;
+  border-left: 1px solid #eee;
+
+  flex: 1;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.posts-details p {
+  margin: 0;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.posts-remove {
+  padding-left: 20px;
+  align-self: center;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  background-image: url('../icons/cancel.svg');
+  background-size: 100% 100%;
+  border: 0;
+  color: black;
+  font-size: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: none;
+}
+
+.post-pannel {
+  
 }
