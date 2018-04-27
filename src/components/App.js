@@ -11,8 +11,13 @@ import {addPost,removePost,addCategory} from '../actions';
 
 class App extends Component {
 
-  state = {
-    showDetailPost: false
+  constructor(props){
+    super(props);
+    this.state = {
+      showDetailPost: false,
+      selectedCategory: ''
+    }
+    this.onCategoryChanged = this.onCategoryChanged.bind(this)
   }
 
   /**
@@ -63,11 +68,22 @@ class App extends Component {
   }
 
   onCategoryChanged = (theCategory) => {
-     console.log("Category changed to : " + theCategory)
+    const {selectedCategory} = this.state
+
+    let toggledSelectedCategory = ((prevCat,newCat)=>{
+      if(prevCat=='') return newCat
+      else if (prevCat==newCat) return ''
+      else return newCat
+    })(selectedCategory,theCategory)
+
+    this.setState({ selectedCategory: toggledSelectedCategory })
+
   }
 
   render() {
     const { posts,showPostList,showPostItem,categories} = this.props
+
+      const { selectedCategory} = this.state
 
     return (
       <div className="App">
@@ -76,9 +92,10 @@ class App extends Component {
         </header>
 
         <CategoryPanel  categories={Object.keys(categories).map(key => categories[key].name).filter(Boolean)}
-                        onCategoryChanged={this.onCategoryChanged} category=''/>
+                        onCategoryChanged={this.onCategoryChanged} icategory={selectedCategory}/>
 
-        <PostPannel posts={posts}
+        <PostPannel posts={
+                    selectedCategory ? posts.filter((k)=>(k.category == selectedCategory)) : posts}
                     onRemovePost={this.removePost} />
       </div>
     );

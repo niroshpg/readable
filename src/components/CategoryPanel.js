@@ -17,6 +17,7 @@ class CategoryPanel extends Component {
 
   updateCategory = (new_category) => {
     this.setState({ category: new_category })
+
   }
 
   clearCategory = () => {
@@ -24,14 +25,22 @@ class CategoryPanel extends Component {
   }
 
   render() {
-    const { categories ,onRemovePost} = this.props
+    const { categories ,onCategoryChanged,icategory} = this.props
     const { category } = this.state
 
     return (
+
       <div className='list-categories'>
+
         <ul className='categories-list'>
+
           {categories.map && categories.map((cat) => (
-            <li key={cat} className='categories-list-item'>
+            <li key={cat} className={cat==icategory ? 'categories-list-item-selected'  :'categories-list-item'  }
+                onClick={() => {
+                  this.updateCategory(cat)
+                  onCategoryChanged(cat)
+                }}
+                >
                 <p>{cat}</p>
             </li>
           ))}
