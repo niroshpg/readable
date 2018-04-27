@@ -23,18 +23,9 @@ class PostDetailView extends Component {
     this.setState({ category: '' })
   }
 
-
   render() {
     const { post,onRemovePost,clearPostSelected} = this.props
     const { category } = this.state
-
-    //let showingPosts;
-    // if (category) {
-    //   showingPosts = posts.filter((post) => post.category == category)
-    // } else {
-    //   showingPosts = posts
-    // }
-    //showingPosts = posts;
 
     return (
       <div className='list-posts'>
@@ -42,10 +33,17 @@ class PostDetailView extends Component {
         post &&
         <section className='posts-list'>
             <div className='posts-list-item'>
-      
+
               <div className='posts-details'>
               <p>Post Details</p>
+                <p>{JSON.stringify(post.id)}</p>
+                <p>{JSON.stringify(post.timestamp)}</p>
                 <p>{JSON.stringify(post.title)}</p>
+                <p>{JSON.stringify(post.body)}</p>
+                <p>{JSON.stringify(post.author)}</p>
+                <p>{JSON.stringify(post.category)}</p>
+                <p>{JSON.stringify(post.voteScore)}</p>
+                <p>{JSON.stringify(post.deleted)}</p>
               </div>
               <button onClick={() => onRemovePost(post)} >
                   <FaEdit size={20}/>
@@ -57,7 +55,6 @@ class PostDetailView extends Component {
             </div>
         </section>
       }
-
       </div>
     )
   }

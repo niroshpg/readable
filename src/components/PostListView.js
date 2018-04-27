@@ -23,17 +23,11 @@ class PostListView extends Component {
     this.setState({ category: '' })
   }
 
-
   render() {
     const { posts ,onRemovePost,onPostSelected,onPostEdit} = this.props
     const { category } = this.state
 
     let showingPosts;
-    // if (category) {
-    //   showingPosts = posts.filter((post) => post.category == category)
-    // } else {
-    //   showingPosts = posts
-    // }
     showingPosts = posts;
 
     return (
@@ -41,9 +35,8 @@ class PostListView extends Component {
 
         <ul className='posts-list'>
           {showingPosts.map((post) => (
-            <li key={post} className='posts-list-item'>
+            <li key={post.id} className='posts-list-item'>
             <button onClick={() => onRemovePost(post)} >
-
                 <FaCaretUp size={20}/>
             </button>
             <p>1</p>
@@ -54,7 +47,6 @@ class PostListView extends Component {
               <div className='posts-details'>
                 <p>{JSON.stringify(post.title)}</p>
               </div>
-
               <button onClick={() => onPostEdit(post)} >
                   <FaEdit size={20}/>
               </button>

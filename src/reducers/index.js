@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import {
   ADD_POST,
   REMOVE_POST,
+  ADD_CATEGORY,
 } from '../actions'
 
 const initialPostsState = {
@@ -17,13 +18,13 @@ const initialPostsState = {
 
 
 function posts (state = {}, action) {
-  const { id,title} = action
+  const { id,timestamp,title,body,author,category,voteScore,deleted} = action
 
   switch (action.type) {
     case ADD_POST :
       return {
         ...state,
-        [id]: { id, title } 
+        [id]: { id,timestamp,title,body,author,category,voteScore,deleted }
       }
     case REMOVE_POST :
       return {
@@ -35,6 +36,20 @@ function posts (state = {}, action) {
   }
 }
 
+function categories (state = {}, action) {
+  const { name,path } = action
+
+  switch (action.type) {
+    case ADD_CATEGORY :
+      return {
+        ...state,
+        [name]: {name,path}
+      }
+    default :
+      return state
+  }
+}
+
 export default combineReducers({
-  posts
+  posts,categories
 })

@@ -22,22 +22,17 @@ class CategoryPanel extends Component {
   clearCategory = () => {
     this.setState({ category: '' })
   }
-  // <div className='categories-details'>
-  // </div>
+
   render() {
     const { categories ,onRemovePost} = this.props
     const { category } = this.state
 
-
     return (
       <div className='list-categories'>
-
         <ul className='categories-list'>
-          {categories.map((cat) => (
+          {categories.map && categories.map((cat) => (
             <li key={cat} className='categories-list-item'>
-
                 <p>{cat}</p>
-
             </li>
           ))}
         </ul>
