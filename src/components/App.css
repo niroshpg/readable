@@ -251,6 +251,26 @@ p {
 
 }
 
+
+.vote-pannel {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-self: center;
+  vertical-align: center;
+
+}
+
+.vote-score-text {
+  text-align: center;
+    font-size: 1.2em;
+}
+
+.vote-score-button {
+    color: green;
+}
+
+
 .post-pannel-addpost {
   position: relative;
   padding: 10px;

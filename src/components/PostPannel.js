@@ -50,11 +50,32 @@ class PostPannel extends Component {
     }
   }
 
-  onPostAdd = () => {
+  onPostAdded = (post) => {
     {
-      console.log("add post")
+      console.log("post added: " + JSON.stringify(post))
+      this.closeAddPostModal()
     }
   }
+
+  onIncrementVoteScore = (post) => {
+    {
+      this.setState({
+
+      })
+    }
+  }
+
+  onDecrementVoteScore = (post) => {
+    {
+      this.setState({
+
+      })
+    }
+  }
+
+
+
+
 
   render() {
     const {posts,onRemovePost} = this.props
@@ -66,6 +87,8 @@ class PostPannel extends Component {
         <PostListView posts={posts}
                       onPostSelected={this.onPostSelected}
                       onRemovePost={onRemovePost}
+                      onIncrementVoteScore={this.onIncrementVoteScore}
+                      onDecrementVoteScore={this.onDecrementVoteScore}
                       /> :
         <PostDetailView post={selectedPost}
                         clearPostSelected={this.clearPostSelected}/>
@@ -83,7 +106,7 @@ class PostPannel extends Component {
         onRequestClose={this.closeAddPostModal}
         contentLabel='Modal'
       >
-        {addPostModalOpen && <AddPost />}
+        {addPostModalOpen && <AddPost onPostAdded={this.onPostAdded}/>}
       </Modal>
 
       </section>

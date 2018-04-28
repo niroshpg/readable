@@ -4,6 +4,8 @@ import {
   ADD_POST,
   REMOVE_POST,
   ADD_CATEGORY,
+  INC_VOTE,
+  DEC_VOTE,
 } from '../actions'
 
 const initialPostsState = {
@@ -19,7 +21,7 @@ const initialPostsState = {
 
 function posts (state = {}, action) {
   const { id,timestamp,title,body,author,category,voteScore,deleted} = action
-
+  let newVoteScore
   switch (action.type) {
     case ADD_POST :
       return {
@@ -30,6 +32,24 @@ function posts (state = {}, action) {
       return {
         ...state,
         [id]: null
+      }
+    case INC_VOTE :
+      newVoteScore = state[id].voteScore + 1
+      return {
+        ...state,
+        [id]: {
+            ...state[id],
+            voteScore: newVoteScore,
+        }
+      }
+    case DEC_VOTE :
+      newVoteScore = state[id].voteScore - 1
+      return {
+        ...state,
+        [id]: {
+            ...state[id],
+            voteScore: newVoteScore,
+        }
       }
     default :
       return state

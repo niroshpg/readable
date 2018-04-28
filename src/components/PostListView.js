@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import FaCloseIcon from 'react-icons/lib/fa/close'
-import FaCaretUp from 'react-icons/lib/fa/caret-up'
-import FaCaretDown from 'react-icons/lib/fa/caret-down'
 import FaInfoCircle from 'react-icons/lib/fa/info-circle'
 import FaEdit from 'react-icons/lib/fa/edit'
+import VoteScoreView from './VoteScoreView.js';
+
+
+import {incrementVote,decrementVote} from '../actions';
 
 class PostListView extends Component {
   static propTypes = {
     posts: PropTypes.array.isRequired
   }
 
-  state = {
-    category: ''
+  constructor(props, context) {
+      super(props, context);
+
+      this.state = {
+        category: ''
+      }
+
+      this.onIncrementVoteScore.bind(this)
+      this.onDecrementVoteScore.bind(this)
   }
+
 
   updateCategory = (new_category) => {
     this.setState({ category: new_category })
@@ -23,8 +35,17 @@ class PostListView extends Component {
     this.setState({ category: '' })
   }
 
+  onIncrementVoteScore = (post) => {
+    this.props.dispatch(incrementVote(post))
+  }
+
+  onDecrementVoteScore = (post) => {
+    this.props.dispatch(decrementVote(post))
+  }
+
   render() {
-    const { posts ,onRemovePost,onPostSelected,onPostEdit} = this.props
+    const { posts ,onRemovePost,onPostSelected,onPostEdit,
+            } = this.props
     const { category } = this.state
 
     let showingPosts;
@@ -36,14 +57,9 @@ class PostListView extends Component {
         <ul className='posts-list'>
           {showingPosts.map((post) => (
             <li key={post.id} className='posts-list-item'>
-            <button onClick={() => onRemovePost(post)} >
-                <FaCaretUp size={20}/>
-            </button>
-            <p>1</p>
-            <button onClick={() => onRemovePost(post)} >
-
-                <FaCaretDown size={20}/>
-            </button>
+              <VoteScoreView  post={post}
+                              onIncrementVoteScore={this.onIncrementVoteScore}
+                              onDecrementVoteScore={this.onDecrementVoteScore}/>
               <div className='posts-details'>
                 <p>{JSON.stringify(post.title)}</p>
               </div>
@@ -64,4 +80,4 @@ class PostListView extends Component {
   }
 }
 
-export default PostListView
+export default connect()(PostListView)
