@@ -7,7 +7,6 @@ import FaInfoCircle from 'react-icons/lib/fa/info-circle'
 import FaEdit from 'react-icons/lib/fa/edit'
 import VoteScoreView from './VoteScoreView.js';
 
-
 import {incrementVote,decrementVote} from '../actions';
 
 class PostListView extends Component {
@@ -19,11 +18,13 @@ class PostListView extends Component {
       super(props, context);
 
       this.state = {
-        category: ''
-      }
+        category: '',
+        sortMethod: 'byVoteScore'
+      };
 
-      this.onIncrementVoteScore.bind(this)
-      this.onDecrementVoteScore.bind(this)
+      this.onIncrementVoteScore.bind(this);
+      this.onDecrementVoteScore.bind(this);
+      this.onSortChanged.bind(this);
   }
 
 
@@ -43,17 +44,49 @@ class PostListView extends Component {
     this.props.dispatch(decrementVote(post))
   }
 
+  onSortChanged = (e) => {
+    this.setState({
+      sortMethod: e.target.value
+    });
+  }
+
   render() {
     const { posts ,onRemovePost,onPostSelected,onPostEdit,
             } = this.props
     const { category } = this.state
 
     let showingPosts;
-    showingPosts = posts;
+    showingPosts = posts.sort((a,b)=>{
+      if(this.state.sortMethod === 'byVoteScoreA'){
+        return a.voteScore > b. voteScore
+
+      }
+      else if(this.state.sortMethod === 'byVoteScoreD'){
+      return   a.voteScore < b. voteScore
+
+      }
+      else if(this.state.sortMethod === 'byTimestamp'){
+        return  a.timestamp < b. timestamp
+      }
+      else
+      return a < b
+    });
 
     return (
       <div className='list-posts'>
+        <section className="sort-pannel">
+         <p>Sort by: </p>
+         <select
+           value={this.state.sortMethod}
+           onChange={this.onSortChanged}
+           className="sort-pannel-select"
+         >
+           <option value="byVoteScoreD">vote score high to low</option>
+            <option value="byVoteScoreA">vote score low to high</option>
+           <option value="byTimestamp">timestamp latest to earliest</option>
+         </select>
 
+        </section>
         <ul className='posts-list'>
           {showingPosts.map((post) => (
             <li key={post.id} className='posts-list-item'>
@@ -73,7 +106,8 @@ class PostListView extends Component {
                   <FaCloseIcon size={20}/>
               </button>
             </li>
-          ))}
+          ))
+        }
         </ul>
       </div>
     )

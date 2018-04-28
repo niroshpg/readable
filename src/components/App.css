@@ -270,6 +270,16 @@ p {
     color: green;
 }
 
+.sort-pannel {
+  display: flex;
+  flex-direction: row;
+  margin: 1.0em;
+}
+
+.sort-pannel-select {
+margin-left: 1.0em;
+}
+
 
 .post-pannel-addpost {
   position: relative;
