@@ -280,6 +280,50 @@ p {
 margin-left: 1.0em;
 }
 
+.posts-details-container{
+
+}
+.posts-details-view{
+  margin-top: 50px;
+  padding: 30px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.posts-details-view-header{
+  background: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.posts-details-view-body{
+  background: white;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.posts-details-view-toolbar{
+  background: white;
+  display: flex;
+  flex-direction: row;
+
+}
+.posts-details-view-toolbar-back{
+  background: white;
+  margin-left: 5px;
+}
+
+.posts-details-view-toolbar-edit{
+  background: white;
+  margin-left: 50px;
+}
+
+.posts-details-view-toolbar-close{
+  background: white;
+
+}
 
 .post-pannel-addpost {
   position: relative;

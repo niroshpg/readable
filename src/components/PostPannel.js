@@ -39,9 +39,18 @@ class PostPannel extends Component {
     this.setState({ selectedPost: post })
   }
 
-  clearPostSelected = () => {
+  clearSelectedPost = () => {
     this.setState({ selectedPost: null })
   }
+
+  editPost = (post) => {
+    console.log("edit post")
+  }
+
+  deletePost = (post) => {
+  console.log("delete post")
+  }
+
 
 
   onPostEdit = (post) => {
@@ -56,23 +65,6 @@ class PostPannel extends Component {
       this.closeAddPostModal()
     }
   }
-
-  onIncrementVoteScore = (post) => {
-    {
-      this.setState({
-
-      })
-    }
-  }
-
-  onDecrementVoteScore = (post) => {
-    {
-      this.setState({
-
-      })
-    }
-  }
-
 
 
 
@@ -91,13 +83,18 @@ class PostPannel extends Component {
                       onDecrementVoteScore={this.onDecrementVoteScore}
                       /> :
         <PostDetailView post={selectedPost}
-                        clearPostSelected={this.clearPostSelected}/>
+                        cleaSelectedPost={this.clearSelectedPost}
+                        editPost={this.editPost}
+                        deletePost={this.deletePost}
+                        />
         )
       }
 
-      <button className='post-pannel-addpost' onClick={() => this.openAddPostModal()} >
-          <FaPlusIcon size={30}/>
-      </button>
+      {
+        (selectedPost === null) && <button className='post-pannel-addpost' onClick={() => this.openAddPostModal()} >
+            <FaPlusIcon size={30}/>
+        </button>
+      }
 
       <Modal
         className='modal'
