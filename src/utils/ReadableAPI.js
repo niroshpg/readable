@@ -32,3 +32,7 @@ export const addPost = (body) =>
     },
     body: JSON.stringify(body)
   }).then(res => res.json())
+
+  export const getAllCommentsForPost = (post) =>
+     fetch(`${api}/posts/${post.id}/comments`, { headers })
+       .then(res => res.json())

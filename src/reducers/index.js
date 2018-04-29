@@ -6,17 +6,10 @@ import {
   ADD_CATEGORY,
   INC_VOTE,
   DEC_VOTE,
+  ADD_COMMENT,
+  INC_COMMENT_VOTE,
+  DEC_COMMENT_VOTE
 } from '../actions'
-
-const initialPostsState = {
-  1: {
-    content: "post1"
-  },
-  2: {
-    content: "post2"
-  },
-
-}
 
 
 function posts (state = {}, action) {
@@ -70,6 +63,39 @@ function categories (state = {}, action) {
   }
 }
 
+function comments (state = {}, action) {
+
+ const { id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted} = action
+ let newVoteScore
+  switch (action.type) {
+    case ADD_COMMENT :
+      return {
+        ...state,
+        [id]: { id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted}
+      }
+    case INC_COMMENT_VOTE :
+      newVoteScore = state[id].voteScore + 1
+      return {
+        ...state,
+        [id]: {
+            ...state[id],
+            voteScore: newVoteScore,
+        }
+      }
+    case DEC_COMMENT_VOTE :
+      newVoteScore = state[id].voteScore - 1
+      return {
+        ...state,
+        [id]: {
+            ...state[id],
+            voteScore: newVoteScore,
+        }
+      }
+    default :
+      return state
+  }
+}
+
 export default combineReducers({
-  posts,categories
+  posts,categories,comments
 })

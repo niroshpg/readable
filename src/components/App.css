@@ -258,7 +258,6 @@ p {
   justify-content: left;
   align-self: center;
   vertical-align: center;
-
 }
 
 .vote-score-text {
@@ -331,6 +330,40 @@ margin-left: 1.0em;
   margin: 10px;
   color: green;
 }
+
+/*comments */
+.comments-pannel {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-self: center;
+  vertical-align: center;
+}
+.comments-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.comments-list-item {
+  padding: 30px;
+  background: white;
+  display: flex;
+}
+
+.comments-details {
+  padding-left: 20px;
+  border-left: 1px solid #eee;
+
+  flex: 1;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/*end comments*/
 
 
 .overlay {

@@ -3,6 +3,9 @@ export const ADD_CATEGORY= 'ADD_CATEGORY'
 export const REMOVE_POST = 'REMOVE_POST'
 export const INC_VOTE = 'INC_VOTE'
 export const DEC_VOTE = 'DEC_VOTE'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const INC_COMMENT_VOTE = 'INC_COMMENT_VOTE'
+export const DEC_COMMENT_VOTE = 'DEC_COMMENT_VOTE'
 
 export function addPost ({ id, timestamp,title,body,author,category,voteScore,deleted}) {
   return {
@@ -14,6 +17,13 @@ export function addCategory ({name,path}) {
   return {
     type: ADD_CATEGORY,
     name,path
+  }
+}
+
+export function addCommnent ({id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted}) {
+  return {
+    type: ADD_COMMENT,
+    id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted
   }
 }
 
@@ -34,6 +44,20 @@ export function incrementVote ({ id }) {
 export function decrementVote ({ id }) {
   return {
     type: DEC_VOTE,
+    id
+  }
+}
+
+export function incrementCommentVote ({ id }) {
+  return {
+    type: INC_COMMENT_VOTE,
+    id
+  }
+}
+
+export function decrementCommentVote ({ id }) {
+  return {
+    type: DEC_COMMENT_VOTE,
     id
   }
 }

@@ -97,7 +97,6 @@ class App extends Component {
         <PostPannel posts={
                     selectedCategory ? posts.filter((k)=>(k.category == selectedCategory)) : posts}
                     onRemovePost={this.removePost} />
-
       </div>
     );
   }
