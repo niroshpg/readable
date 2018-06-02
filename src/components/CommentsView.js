@@ -6,8 +6,10 @@ import FaCaretDown from 'react-icons/lib/fa/caret-down'
 import TiCloseIcon from 'react-icons/lib/ti/times'
 import TiOKIcon from 'react-icons/lib/ti/tick'
 import CommentsVoteScoreView from './CommentsVoteScoreView.js';
+import AddCommentView from './AddCommentView.js';
 
 export default function CommentsView(props){
+  let usercomment
   return (
     <section class="addCommentsToState-pannel">
       <ul className='posts-list'>
@@ -21,13 +23,12 @@ export default function CommentsView(props){
             <div className='posts-details'>
               <p>{comment.body}</p>
             </div>
-
-
-
           </li>
+
         ))
       }
       </ul>
+      <AddCommentView addComments={props.addComments}/>
     </section>
   )
 

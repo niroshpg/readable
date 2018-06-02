@@ -66,9 +66,6 @@ class PostPannel extends Component {
     }
   }
 
-
-
-
   render() {
     const {posts,onRemovePost} = this.props
     const { selectedPost,addPostModalOpen} = this.state
@@ -83,7 +80,7 @@ class PostPannel extends Component {
                       onDecrementVoteScore={this.onDecrementVoteScore}
                       /> :
         <PostDetailView post={selectedPost}
-                        cleaSelectedPost={this.clearSelectedPost}
+                        clearSelectedPost={this.clearSelectedPost}
                         editPost={this.editPost}
                         deletePost={this.deletePost}
                         />

@@ -1,3 +1,5 @@
+import * as ReadableAPI from '../utils/ReadableAPI';
+
 export const ADD_POST= 'ADD_POST'
 export const ADD_CATEGORY= 'ADD_CATEGORY'
 export const REMOVE_POST = 'REMOVE_POST'
@@ -59,5 +61,47 @@ export function decrementCommentVote ({ id }) {
   return {
     type: DEC_COMMENT_VOTE,
     id
+  }
+}
+
+export function incrementCommentVoteAndUpdate(comment){
+  return (dispatch) => {
+    console.log("requesting comment "+JSON.stringify(comment)+" update from server ...")
+    // start update comment ...
+    ReadableAPI.incrementComment(comment)
+    // .then((response) => {
+    //     if (response.status !== 200) {
+    //       console.log("ERROR: " + response.statusText)
+    //     }
+    //     // update commnet is completed, start processing response ...
+    //     return response;
+    // })
+     .then(() => dispatch(incrementCommentVote(comment)))
+     .catch(
+        error =>
+         console.error("ERROR: failed to update comment - " + error)
+      ).then(response => console.log('Success:', response));
+
+  }
+}
+
+export function deccrementCommentVoteAndUpdate(comment){
+  return (dispatch) => {
+    console.log("requesting comment "+JSON.stringify(comment)+" update from server ...")
+    // start update comment ...
+    ReadableAPI.decrementComment(comment)
+    // .then((response) => {
+    //     if (response.status !== 200) {
+    //       console.log("ERROR: " + response.statusText)
+    //     }
+    //     // update commnet is completed, start processing response ...
+    //     return response;
+    // })
+    .then(() => dispatch(decrementCommentVote(comment)))
+    .catch(
+       error =>
+        console.error("ERROR: failed to update comment - " + error)
+     ).then(response => console.log('Success:', response));
+
   }
 }

@@ -8,12 +8,15 @@ import FaInfoCircle from 'react-icons/lib/fa/info-circle'
 import FaEdit from 'react-icons/lib/fa/edit'
 import TiArrowBack from 'react-icons/lib/ti/arrow-back'
 import Moment from 'react-moment';
+import { v4 } from 'uuid';
 
 import VoteScoreView from './VoteScoreView.js';
 import CommentsView from './CommentsView.js';
 
+
 import {incrementVote,decrementVote,addCommnent,
-  incrementCommentVote,decrementCommentVote} from '../actions';
+  incrementCommentVote,decrementCommentVote,
+  incrementCommentVoteAndUpdate,deccrementCommentVoteAndUpdate} from '../actions';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 
@@ -31,6 +34,8 @@ class PostDetailView extends Component {
       };
       this.onIncrementVoteScore.bind(this);
       this.onDecrementVoteScore.bind(this);
+      this.onIncrementCommentVoteScore.bind(this);
+      this.onDecrementCommentVoteScore.bind(this);
   }
 
   onIncrementVoteScore = (post) => {
@@ -44,13 +49,18 @@ class PostDetailView extends Component {
   }
 
   onIncrementCommentVoteScore = (comment) => {
+    console.log("inc")
     //this.props.dispatch(incrementVote(post))
     this.props.onIncrementCommentVoteInSate(comment)
+    //ReadableAPI.updateComment(comment)
   }
 
   onDecrementCommentVoteScore = (comment) => {
+    console.log("inc")
     //this.props.dispatch(decrementVote(post))
     this.props.decrementCommentVoteInState(comment);
+    //console.log("update comment: " + JSON.stringify(comment))
+    //ReadableAPI.updateComment(comment)
   }
 
   updateCategory = (new_category) => {
@@ -60,7 +70,10 @@ class PostDetailView extends Component {
   clearCategory = () => {
     this.setState({ category: '' })
   }
-
+  addComments = (comment) => {
+    console.log("TODO: add comments: " + JSON.stringify(comment))
+    this.props.addCommentsToState({id: v4(), body: comment, voteScore: 0, timestamp: Date.now(), parentId: this.state.post.id})
+  }
     /**
       @description lifecylce method called after when this component included into the DOM
       Here we invoke the backend API to load the all the posts
@@ -70,7 +83,7 @@ class PostDetailView extends Component {
 
       ReadableAPI.getAllCommentsForPost(aPost).then((comments) => {
           Object.keys(comments).map(key => comments[key]).filter(Boolean).map((acomment)=>{
-             console.log(acomment);
+             console.log("CDM[DETAILED]: "+JSON.stringify(acomment));
               this.props.addCommentsToState(acomment)
           })
       }).finally((err)=>{
@@ -128,18 +141,19 @@ class PostDetailView extends Component {
           <h4>posted  by {post.author} at <span>  <Moment format="YYYY/MM/DD HH:MM">{post.timestamp}</Moment> </span> </h4>
           <p>{post.body}</p>
           <CommentsView comments={comments}
-                        post={post}
+                        post={latestPost}
                         onIncrementVoteScore={this.onIncrementCommentVoteScore}
-                        onDecrementVoteScore={this.onDecrementCommentVoteScore}/>
+                        onDecrementVoteScore={this.onDecrementCommentVoteScore}
+                        addComments={this.addComments}/>
         </section>
-
         </section>
       }
       </div>
     )
   }
 }
-
+// <PostACommentView comment=''
+//               addComments={this.addComments}/>
 function mapStateToProps ({ posts,comments}) {
   return {
     comments: Object.keys(comments).map(key => comments[key]).filter(Boolean),
@@ -152,8 +166,15 @@ function mapDispatchToProps (dispatch) {
     addCommentsToState: (data) => dispatch(addCommnent(data)),
     incrementVoteInState: (data) => dispatch(incrementVote(data)),
     decrementVoteInState: (data) => dispatch(decrementVote(data)),
-    onIncrementCommentVoteInSate: (data) => dispatch(incrementCommentVote(data)),
-    decrementCommentVoteInState: (data) => dispatch(decrementCommentVote(data))
+    onIncrementCommentVoteInSate: (data) => {
+      //dispatch(incrementCommentVote(data))
+      return incrementCommentVoteAndUpdate(data)(dispatch)
+    },
+    decrementCommentVoteInState: (data) => {
+      //return dispatch(decrementCommentVote(data))
+
+      return deccrementCommentVoteAndUpdate(data)(dispatch)
+    }
   }
 }
 
