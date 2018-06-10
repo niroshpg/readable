@@ -65,9 +65,11 @@ export function decrementCommentVote ({ id }) {
 }
 
 export function incrementCommentVoteAndUpdate(comment){
+  var inputComment = Object.assign({},comment)
   return (dispatch) => {
-    console.log("requesting comment "+JSON.stringify(comment)+" update from server ...")
+    console.log("requesting comment "+JSON.stringify(comment.voteScore)+" update from server ...")
     // start update comment ...
+
     ReadableAPI.incrementComment(comment)
     // .then((response) => {
     //     if (response.status !== 200) {
@@ -76,7 +78,11 @@ export function incrementCommentVoteAndUpdate(comment){
     //     // update commnet is completed, start processing response ...
     //     return response;
     // })
-     .then(() => dispatch(incrementCommentVote(comment)))
+     .then(() => {
+       console.log('comment voteScore: ', comment.voteScore)
+        console.log('comment voteScore: ', inputComment.voteScore)
+        dispatch(incrementCommentVote(inputComment))
+      })
      .catch(
         error =>
          console.error("ERROR: failed to update comment - " + error)
