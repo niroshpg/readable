@@ -6,6 +6,7 @@ export const REMOVE_POST = 'REMOVE_POST'
 export const INC_VOTE = 'INC_VOTE'
 export const DEC_VOTE = 'DEC_VOTE'
 export const ADD_COMMENT = 'ADD_COMMENT'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const INC_COMMENT_VOTE = 'INC_COMMENT_VOTE'
 export const DEC_COMMENT_VOTE = 'DEC_COMMENT_VOTE'
 
@@ -26,6 +27,13 @@ export function addCommnent ({id,parentid,timestamp,body,author,voteScore,delete
   return {
     type: ADD_COMMENT,
     id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted
+  }
+}
+
+export function removeComment ({ id }) {
+  return {
+    type: REMOVE_COMMENT,
+    id
   }
 }
 
@@ -64,44 +72,75 @@ export function decrementCommentVote ({ id }) {
   }
 }
 
+export function incrementVoteAndUpdate(post){
+  return (dispatch) => {
+    dispatch(incrementVote(post));
+
+    return  ReadableAPI.incrementPostVote(post)
+      .then(response => {console.log('Success:', response)})
+      .catch(
+          (error) => {
+            console.error("ERROR: failed to increment post - " + error)
+          }
+    );
+  }
+}
+
+export function deccrementVoteAndUpdate(post){
+  return (dispatch) => {
+  dispatch(decrementVote(post));
+
+  return  ReadableAPI.decrementPostVote(post)
+    .then(response => {console.log('Success:', response)})
+    .catch(
+        (error) => {
+          console.error("ERROR: failed to decrement post - " + error)
+        }
+  );
+ }
+}
+
 export function incrementCommentVoteAndUpdate(comment){
   return (dispatch) => {
-    console.log("requesting comment "+JSON.stringify(comment)+" update from server ...")
-    // start update comment ...
-    ReadableAPI.incrementComment(comment)
-    // .then((response) => {
-    //     if (response.status !== 200) {
-    //       console.log("ERROR: " + response.statusText)
-    //     }
-    //     // update commnet is completed, start processing response ...
-    //     return response;
-    // })
-     .then(() => dispatch(incrementCommentVote(comment)))
-     .catch(
-        error =>
-         console.error("ERROR: failed to update comment - " + error)
-      ).then(response => console.log('Success:', response));
+    // ReadableAPI.updateComment(comment)
+    //  .then(() => {
+    //     dispatch(incrementCommentVote(comment))
+    //   })
+    //  .catch(
+    //     error =>
+    //      console.error("ERROR: failed to update comment - " + error)
+    //   ).then(response => console.log('Success:', response));
 
+    dispatch(incrementCommentVote(comment));
+
+    return  ReadableAPI.incrementCommentVote(comment)
+      .then(response => {console.log('Success:', response)})
+      .catch(
+          (error) => {
+            console.error("ERROR: failed to increment comment - " + error)
+          }
+    );
   }
 }
 
 export function deccrementCommentVoteAndUpdate(comment){
   return (dispatch) => {
-    console.log("requesting comment "+JSON.stringify(comment)+" update from server ...")
-    // start update comment ...
-    ReadableAPI.decrementComment(comment)
-    // .then((response) => {
-    //     if (response.status !== 200) {
-    //       console.log("ERROR: " + response.statusText)
-    //     }
-    //     // update commnet is completed, start processing response ...
-    //     return response;
-    // })
-    .then(() => dispatch(decrementCommentVote(comment)))
-    .catch(
-       error =>
-        console.error("ERROR: failed to update comment - " + error)
-     ).then(response => console.log('Success:', response));
+  //   ReadableAPI.updateComment(comment)
+  //   .then(() => dispatch(decrementCommentVote(comment)))
+  //   .catch(
+  //      error =>
+  //       console.error("ERROR: failed to update comment - " + error)
+  //    ).then(response => console.log('Success:', response));
+  // }
 
-  }
+  dispatch(decrementCommentVote(comment));
+
+  return  ReadableAPI.decrementCommentVote(comment)
+    .then(response => {console.log('Success:', response)})
+    .catch(
+        (error) => {
+          console.error("ERROR: failed to decrement comment - " + error)
+        }
+  );
+ }
 }

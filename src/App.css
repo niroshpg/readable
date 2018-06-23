@@ -1,0 +1,235 @@
+.App {
+  text-align: left;
+}
+
+.App-header {
+  background-color: #08a;
+  height: 30px;
+  padding: 30px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+
+.nav-bar{
+  height: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: left;
+}
+
+.nav-bar ul{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  background-color: white;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 50px;
+}
+
+.nav-bar li{
+  list-style: none;
+  display: inline-block;
+  width: calc(50% / 3);
+  height: 30px;
+  padding: 10px;
+  text-align: left;
+  background-color: white;
+}
+
+.nav-bar a:link, a:visited {
+   background-color: blue;
+   color: white;
+   padding: 8px 25px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   border: 2px solid blue;
+   padding: 6px;
+   border-radius: 5px;
+}
+
+.nav-bar a:hover, a:active {
+   background-color: green;
+}
+
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0px;
+  margin: 0px;
+}
+
+.sort-pannel{
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  justify-content: left;
+  align-items: center;
+
+}
+
+.sort-pannel select{
+   margin: 0 2%;
+}
+
+
+.list-pannel{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0px;
+  margin: 0px;
+}
+
+.list-pannel ul{
+  padding: 1px;
+  margin: 1px;
+  width: 100%;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+}
+
+.list-pannel li{
+  display: flex;
+  padding: 10px;
+  margin: 20px 0 20px 0;
+
+  background-color: white;
+  border: 1px solid #c0c0c0;
+  border-radius: 3px;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+}
+
+.container {
+  margin: 0 4%;
+}
+
+
+.posttile-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.posttile-header{
+  position: relative;
+  background-color: #f0f0f0;
+
+}
+.posttile-body{
+  background-color: white;
+}
+
+.posttile-header-score{
+  float: left;
+  margin: 10px;
+}
+
+.posttile-header-score p{
+  display: inline;
+  margin: 5px;
+  font-size: 1.5em;
+}
+
+.posttile-header-comments-cnt{
+  float: center;
+  margin: 10px;
+}
+
+.posttile-header-tools{
+  float: right;
+  margin: 10px;
+}
+
+.posttile-body-commentbar p{
+  float: left;
+  margin: 0;
+  padding: 5px;
+}
+
+.posttile-button{
+  border: none;
+  background-color: transparent;
+}
+
+
+.commentile-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.commentile-header{
+  position: relative;
+  background-color: #f0f0f0;
+
+}
+.commentile-body{
+  background-color: white;
+}
+
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0px;
+  margin: 0px;
+}
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .container {
+    margin: 0 4%;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .container {
+    margin: 0 8%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .container {
+    margin: 0 12%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .container {
+    margin: 0 18%;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .container {
+    margin: 0 18%;
+  }
+}

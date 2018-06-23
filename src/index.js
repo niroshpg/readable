@@ -1,33 +1,49 @@
+import { AppContainer } from 'react-hot-loader'
+import { applyMiddleware, compose, createStore } from 'redux'
+import { createBrowserHistory } from 'history'
+import { routerMiddleware, connectRouter } from 'connected-react-router'
+import { Provider } from 'react-redux'
+import thunkMiddleware from 'redux-thunk';
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import App from './components/App'
-import registerServiceWorker from './registerServiceWorker'
-import { createStore, applyMiddleware, compose } from 'redux'
-import reducer from './reducers'
-import { Provider } from 'react-redux'
+import App from './App'
+import rootReducer from './reducers'
 
-const logger = store => next => action => {
-  console.group(action.type)
-  console.info('dispatching', action)
-  let result = next(action)
-  console.log('next state', store.getState())
-  console.groupEnd(action.type)
-  return result
-}
+const history = createBrowserHistory()
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
-  reducer,
-  composeEnhancers(
-    applyMiddleware(logger)
-  )
+  connectRouter(history)(rootReducer),
+  composeEnhancer(
+    applyMiddleware(
+      routerMiddleware(history),
+      thunkMiddleware
+    ),
+  ),
 )
 
+const render = () => {
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={store}>
+        <App history={history} />
+      </Provider>
+    </AppContainer>,
+    document.getElementById('root')
+  )
+}
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>, document.getElementById('root'));
-registerServiceWorker();
+render()
+
+// Hot reloading
+if (module.hot) {
+  // Reload components
+  module.hot.accept('./App', () => {
+    render()
+  })
+
+  // Reload reducers
+  module.hot.accept('./reducers', () => {
+    store.replaceReducer(connectRouter(history)(rootReducer))
+  })
+}

@@ -44,11 +44,39 @@ export const addPost = (body) =>
             ...headers,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(comment)
+        body: JSON.stringify(comment)
    }).then(res => res.json())
      .then(data => data.comment)
 
-export const incrementComment = (comment) => {
+ export const incrementPostVote = (post) => {
+   let upost = post
+   upost.voteScore = ++upost.voteScore
+       return  fetch(`${api}/posts/${post.id}`, {
+                method: 'PUT',
+                headers: {
+                  ...headers,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(upost)
+         }).then(res => res.json())
+           .then(data => data.post)
+ }
+
+ export const decrementPostVote = (post) => {
+   let upost = post
+   upost.voteScore = --upost.voteScore
+       return  fetch(`${api}/posts/${post.id}`, {
+                method: 'PUT',
+                headers: {
+                  ...headers,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(upost)
+         }).then(res => res.json())
+           .then(data => data.post)
+ }
+
+export const incrementCommentVote = (comment) => {
   let ucomment = comment
   ucomment.voteScore = ++ucomment.voteScore
       return  fetch(`${api}/comments/${comment.id}`, {
@@ -62,7 +90,7 @@ export const incrementComment = (comment) => {
           .then(data => data.comment)
 }
 
-export const decrementComment = (comment) => {
+export const decrementCommentVote = (comment) => {
   let ucomment = comment
   ucomment.voteScore = --ucomment.voteScore
     return    fetch(`${api}/comments/${comment.id}`, {
