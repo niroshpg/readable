@@ -82,14 +82,13 @@ class PostTile extends Component {
             </section>
 
             <section className="posttile-body">
-              <h4>{latestPost.id}</h4>
+              <h4>{latestPost.title}</h4>
               <PostCommentsBar count={comments4tiles.filter(
                 (cm)=>{
-                  return cm.parentid == latestPost.id
+                  return cm.parentid === latestPost.id
                 }
               ).length}/>
             </section>
-
           </div>
     )
   }

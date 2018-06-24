@@ -1,16 +1,104 @@
 import React, { Component }  from 'react'
 
 import { connect } from 'react-redux'
+import Moment from 'react-moment';
 import '../App.css';
 
-import PostCommentsBar from './PostCommentsBar'
+import CommentsToolBar from './CommentsToolBar'
 import CommentScore from './CommentScore'
-
-import {addCommnent,removePost} from '../actions';
+import {editCommentAndUpdate,removeCommentAndUpdate} from '../actions';
 
 import { withRouter } from "react-router-dom";
 
+class CommentTile extends Component {
+  constructor(props){
+  	super(props);
+    this.state = {
+      commentid:props.commentid,
+    	isEditable: false,
+      comment: this.props.comments4tiles.filter(p=>p.id===props.commentid)[0]
+		}
+    this.onCommentBodyChanged = this.onCommentBodyChanged.bind(this)
+    this.onCommentEditCompleted = this.onCommentEditCompleted.bind(this)
+  }
 
+  onCommentEdit = (comment) => {
+    console.log("edit comment")
+    this.setState({
+      isEditable: true
+    })
+  }
+
+  onCommentEditCompleted = () => {
+      this.setState({
+        isEditable: false
+      });
+    this.props.editCommentsInState(this.state.comment);
+  }
+
+  onCommentBodyChanged(e){
+    console.log("editing " + e.target.name)
+  	this.setState({
+    	comment:{
+        ...this.state.comment,
+        [e.target.name] : e.target.value
+      }
+    })
+  }
+
+  onRemoveComment = (removed) => {
+    console.log("remove comment")
+    this.props.removeCommentFromState(removed)
+  }
+
+  render(){
+    const {comment} = this.state;
+
+    return (
+          <div className="commentile-container">
+            <section className="commentile-header">
+
+                <CommentScore comment={comment} />
+
+                <CommentsToolBar  comment={comment}
+                              onCommentEdit={this.onCommentEdit}
+                              onRemoveComment={this.onRemoveComment} />
+            </section>
+
+            <section className="commentile-body">
+
+                <div>
+                  {this.state.isEditable
+                    && <div>
+                          <input name="body" type="text" value={comment.body} onChange={this.onCommentBodyChanged}/>
+                          <br/>
+                          <button onClick={this.onCommentEditCompleted}>Done
+                          </button>
+                      </div>
+                  }
+                  {
+                    !this.state.isEditable &&
+                    <div>
+                      <h4>{comment.body}</h4>
+                      <h5>
+                      <em>by {comment.author}</em>
+                      @<span><Moment format="YYYY/MM/DD HH:MM">{comment.timestamp}</Moment></span></h5>
+                    </div>
+
+                  }
+                </div>
+            </section>
+          </div>
+    )
+
+  }
+}
+/*
+
+<EditCommentBody
+  comment={comment}
+  onCommentChange={this.onEdit}
+/>
 class CommentTile extends Component {
 
   constructor(props,context){
@@ -19,24 +107,14 @@ class CommentTile extends Component {
         commentid:props.commentid
     };
   }
-
-  onPostEdit = (comment) => {
+  onCommentEdit = (comment) => {
     console.log("edit comment")
+
   }
 
-  onRemovePost = (removed) => {
+  onRemoveComment = (removed) => {
     console.log("remove comment")
-  }
-
-  componentDidMount() {
-    // let thecomment = this.props.comments4tiles.filter(p=>p.id===this.state.commentid)[0];
-    //   console.log("commentTile mounted c= " + thecomment.voteScore)
-  }
-
-  componentDidUpdate() {
-    // let thecomment = this.props.comments4tiles.filter(p=>p.id===this.state.commentid)[0];
-    //
-    //   console.log("commentTile updated c= " + thecomment.voteScore)
+    this.props.removeCommentFromState(removed)
   }
 
   render(){
@@ -48,11 +126,9 @@ class CommentTile extends Component {
 
                 <CommentScore comment={thecomment} />
 
-                <PostCommentsBar  post={thecomment}
-                              showInfo={false}
-                              onPostEdit={this.onPostEdit}
-                              onPostSelected={this.onPostSelected}
-                              onRemovePost={this.onRemovePost} />
+                <CommentsToolBar  comment={thecomment}
+                              onCommentEdit={this.onCommentEdit}
+                              onRemoveComment={this.onRemoveComment} />
             </section>
 
             <section className="commentile-body">
@@ -64,6 +140,7 @@ class CommentTile extends Component {
     )
   }
 }
+*/
 
 function mapStateToProps ({ posts,comments}) {
   return {
@@ -74,8 +151,8 @@ function mapStateToProps ({ posts,comments}) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    addCommentsToState: (data) => dispatch(addCommnent(data)),
-    removePostFromState: (data) => dispatch(removePost(data)),
+    editCommentsInState: (data) => dispatch(editCommentAndUpdate(data)),
+    removeCommentFromState: (data) => dispatch(removeCommentAndUpdate(data)),
   }
 }
 

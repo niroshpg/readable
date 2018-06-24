@@ -21,6 +21,8 @@ class CreatePost extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddPost = this.handleAddPost.bind(this);
+    this.handleCancelAddPost = this.handleCancelAddPost.bind(this);
+
   }
   handleSubmit = (event) => {
       event.preventDefault();
@@ -35,6 +37,11 @@ class CreatePost extends Component {
         console.log('handleAddPost: done');
       this.props.history.goBack();
 
+  }
+
+  handleCancelAddPost = (event) => {
+      event.preventDefault();
+      this.props.history.goBack();
   }
 
   handleInputChange(event) {
@@ -92,10 +99,16 @@ class CreatePost extends Component {
 
 
             <button   onClick={this.handleAddPost}
-                      style={{"padding": "10px", "backgroundColor":"blue", "color":"white"}}
+                      style={{"padding": "10px","margin":"10px 30px 0 0",  "backgroundColor":"#0188aa", "color":"white"}}
                       value={this.state}
             >
             Add Post
+            </button>
+            <button   onClick={this.handleCancelAddPost}
+                      style={{"padding": "10px","margin":"10px 30px 0 0",  "backgroundColor":"grey", "color":"white"}}
+                      value={this.state}
+            >
+            Cancel
             </button>
 
           </form>

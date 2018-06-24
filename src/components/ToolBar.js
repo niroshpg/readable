@@ -43,23 +43,24 @@ class ToolBar extends Component {
       let cat = Object.keys(categories).map(key => categories[key].name).filter(Boolean);
       return (
         <div>
+        <header className="App-header">
+          <h1 className="App-title">Readable</h1>
+        </header>
           <nav className='nav-bar'>
-            <ul>
-            <li><Link to={`/`}>
-
-                <Icon icon={ic_home} size={20}  />
-
-            </Link> </li>
-               {
-
-
-                  cat.map((category)=>{
-                    return  <li key={category}>
-                          <Link to={`/${category}`}>{category}</Link>
-                    </li>
-                  }
-                 )
-               }
+            <ul >
+                <li>
+                    <Link to={`/`}>
+                      <Icon icon={ic_home} size={20} />
+                    </Link>
+                </li>
+                {
+                      cat.map((category)=>{
+                        return  <li key={category}>
+                              <Link to={`/${category}`}>{category}</Link>
+                        </li>
+                      }
+                     )
+                }
             </ul>
           </nav>
         </div>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import '../App.css';
 import {addCommnent,removeComment} from '../actions';
 import CommentTile from './CommentTile'
+import AddComments from './AddComments.js';
 
 class Comments extends Component {
 
@@ -12,24 +13,26 @@ class Comments extends Component {
 
       this.state = {
         postid: this.props.postid,
+        comments: this.props.comments4post.filter(c=>c.parentid===this.props.postid)
       };
   }
 
   render(){
-      let thecomments = this.props.comments4post.filter(c=>c.parentid===this.state.postid);
+     const {comments} = this.state;
       return (
         <div className='comments-container'>
         <section className="list-pannel">
         <ul >
-          {
-              thecomments.map((comment) => (
-                <li key={comment.id} >
-                  <CommentTile commentid={comment.id}/>
-                </li>
-              ))
-          }
+        {
+          comments.map((comment) => (
+            <li key={comment.id} >
+              <CommentTile commentid={comment.id}/>
+            </li>
+          ))
+        }
         </ul>
         </section>
+        <AddComments postid={this.state.postid}/>
         </div>
       )
     }

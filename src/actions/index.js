@@ -1,14 +1,19 @@
 import * as ReadableAPI from '../utils/ReadableAPI';
 
+export const ADD_CATEGORY= 'ADD_CATEGORY'
+
 export const ADD_POST= 'ADD_POST'
 export const EDIT_POST= 'EDIT_POST'
 export const CREATE_POST= 'CREATE_POST'
-export const ADD_CATEGORY= 'ADD_CATEGORY'
 export const REMOVE_POST = 'REMOVE_POST'
+
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+
 export const INC_VOTE = 'INC_VOTE'
 export const DEC_VOTE = 'DEC_VOTE'
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const INC_COMMENT_VOTE = 'INC_COMMENT_VOTE'
 export const DEC_COMMENT_VOTE = 'DEC_COMMENT_VOTE'
 
@@ -44,6 +49,13 @@ export function removeComment ({ id }) {
   return {
     type: REMOVE_COMMENT,
     id
+  }
+}
+
+export function editComment ({ id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted}) {
+  return {
+    type: EDIT_COMMENT,
+    id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted
   }
 }
 
@@ -90,6 +102,12 @@ export function createPost ({ id, timestamp,title,body,author,category,voteScore
   }
 }
 
+export function createComment ({ id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted}) {
+  return {
+    type: CREATE_COMMENT,
+    id,parentid,timestamp,body,author,voteScore,deleted,parentDeleted
+  }
+}
 
 export function incrementVoteAndUpdate(post){
   return (dispatch) => {
@@ -121,15 +139,6 @@ export function deccrementVoteAndUpdate(post){
 
 export function incrementCommentVoteAndUpdate(comment){
   return (dispatch) => {
-    // ReadableAPI.updateComment(comment)
-    //  .then(() => {
-    //     dispatch(incrementCommentVote(comment))
-    //   })
-    //  .catch(
-    //     error =>
-    //      console.error("ERROR: failed to update comment - " + error)
-    //   ).then(response => console.log('Success:', response));
-
     dispatch(incrementCommentVote(comment));
 
     return  ReadableAPI.incrementCommentVote(comment)
@@ -144,27 +153,17 @@ export function incrementCommentVoteAndUpdate(comment){
 
 export function deccrementCommentVoteAndUpdate(comment){
   return (dispatch) => {
-  //   ReadableAPI.updateComment(comment)
-  //   .then(() => dispatch(decrementCommentVote(comment)))
-  //   .catch(
-  //      error =>
-  //       console.error("ERROR: failed to update comment - " + error)
-  //    ).then(response => console.log('Success:', response));
-  // }
+    dispatch(decrementCommentVote(comment));
 
-  dispatch(decrementCommentVote(comment));
-
-  return  ReadableAPI.decrementCommentVote(comment)
-    .then(response => {console.log('Success:', response)})
-    .catch(
-        (error) => {
-          console.error("ERROR: failed to decrement comment - " + error)
-        }
-  );
- }
+    return  ReadableAPI.decrementCommentVote(comment)
+      .then(response => {console.log('Success:', response)})
+      .catch(
+          (error) => {
+            console.error("ERROR: failed to decrement comment - " + error)
+          }
+    );
+  }
 }
-
-
 
 export function createPostAndUpdate(post){
   return (dispatch) => {
@@ -172,26 +171,41 @@ export function createPostAndUpdate(post){
     ReadableAPI.addPost(post)
     .then(response => {console.log('Success:', response)});
     return dispatch(addPost(post));
-    // .then(() => dispatch(addPost(post)))
-    // .then(response => console.log('Success:', response))
-    // .catch(
-    //    error =>
-    //     console.error("ERROR: failed to add post - " + error)
-    //  );
   }
- }
+}
 
- export function editPostAndUpdate(post){
-   return (dispatch) => {
-     console.log('editPostAndUpdate');
-     ReadableAPI.editPost(post)
-     .then(response => {console.log('Success:', response)});
-     return dispatch(editPost(post));
-     // .then(() => dispatch(addPost(post)))
-     // .then(response => console.log('Success:', response))
-     // .catch(
-     //    error =>
-     //     console.error("ERROR: failed to add post - " + error)
-     //  );
-   }
+export function editPostAndUpdate(post){
+ return (dispatch) => {
+   console.log('editPostAndUpdate');
+   ReadableAPI.editPost(post)
+   .then(response => {console.log('Success:', response)});
+   return dispatch(editPost(post));
+ }
+}
+
+export function removeCommentAndUpdate(comment){
+ return (dispatch) => {
+   console.log('removeCommentAndUpdate');
+   ReadableAPI.removeComment(comment)
+   .then(response => {console.log('Success:', response)});
+   return dispatch(removeComment(comment));
+ }
+}
+
+export function editCommentAndUpdate(comment){
+ return (dispatch) => {
+   console.log('editCommentAndUpdate');
+   ReadableAPI.updateComment(comment)
+   .then(response => {console.log('Success:', response)});
+   return dispatch(editComment(comment));
+ }
+}
+
+export function createCommentAndUpdate(comment){
+  return (dispatch) => {
+    console.log('createCommentAndUpdate');
+    ReadableAPI.addCommnent(comment)
+    .then(response => {console.log('Success:', response)});
+    return dispatch(addCommnent(comment));
   }
+}

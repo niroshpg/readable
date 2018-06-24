@@ -95,7 +95,7 @@ class EditPost extends Component {
 
 
             <button   onClick={this.handleSaveEditPost}
-                      style={{"padding": "10px", "backgroundColor":"blue", "color":"white"}}
+                      style={{"padding": "10px","margin":"10px 30px 0 0", "backgroundColor":"#0188aa", "color":"white"}}
                       value={this.state}
             >
             Save
