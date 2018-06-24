@@ -24,11 +24,17 @@ class PostTile extends Component {
   }
 
   onPostEdit = (post) => {
-      console.log("edit post")
+        /*this.props.history.push(`/${selected.category}/${selected.id}`);*/
+        let latestPost = this.props.posts4tiles.filter(p=>p.id===this.state.postid)[0];
+        this.props.history.push({
+          pathname: '/edit',
+          state: { ...latestPost }
+        })
   }
 
   onPostSelected = (selected) => {
         this.props.history.push(`/${selected.category}/${selected.id}`);
+
   }
 
   onRemovePost = (removed) => {
@@ -76,8 +82,12 @@ class PostTile extends Component {
             </section>
 
             <section className="posttile-body">
-              <h4>{latestPost.title}</h4>
-              <PostCommentsBar count={comments4tiles.length}/>
+              <h4>{latestPost.id}</h4>
+              <PostCommentsBar count={comments4tiles.filter(
+                (cm)=>{
+                  return cm.parentid == latestPost.id
+                }
+              ).length}/>
             </section>
 
           </div>

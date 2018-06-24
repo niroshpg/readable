@@ -1,6 +1,8 @@
 import * as ReadableAPI from '../utils/ReadableAPI';
 
 export const ADD_POST= 'ADD_POST'
+export const EDIT_POST= 'EDIT_POST'
+export const CREATE_POST= 'CREATE_POST'
 export const ADD_CATEGORY= 'ADD_CATEGORY'
 export const REMOVE_POST = 'REMOVE_POST'
 export const INC_VOTE = 'INC_VOTE'
@@ -16,6 +18,14 @@ export function addPost ({ id, timestamp,title,body,author,category,voteScore,de
     id,timestamp,title,body,author,category,voteScore,deleted
   }
 }
+
+export function editPost ({ id, timestamp,title,body,author,category,voteScore,deleted}) {
+  return {
+    type: EDIT_POST,
+    id,timestamp,title,body,author,category,voteScore,deleted
+  }
+}
+
 export function addCategory ({name,path}) {
   return {
     type: ADD_CATEGORY,
@@ -71,6 +81,15 @@ export function decrementCommentVote ({ id }) {
     id
   }
 }
+
+
+export function createPost ({ id, timestamp,title,body,author,category,voteScore,deleted}) {
+  return {
+    type: CREATE_POST,
+    id,timestamp,title,body,author,category,voteScore,deleted
+  }
+}
+
 
 export function incrementVoteAndUpdate(post){
   return (dispatch) => {
@@ -144,3 +163,35 @@ export function deccrementCommentVoteAndUpdate(comment){
   );
  }
 }
+
+
+
+export function createPostAndUpdate(post){
+  return (dispatch) => {
+    console.log('createPostAndUpdate');
+    ReadableAPI.addPost(post)
+    .then(response => {console.log('Success:', response)});
+    return dispatch(addPost(post));
+    // .then(() => dispatch(addPost(post)))
+    // .then(response => console.log('Success:', response))
+    // .catch(
+    //    error =>
+    //     console.error("ERROR: failed to add post - " + error)
+    //  );
+  }
+ }
+
+ export function editPostAndUpdate(post){
+   return (dispatch) => {
+     console.log('editPostAndUpdate');
+     ReadableAPI.editPost(post)
+     .then(response => {console.log('Success:', response)});
+     return dispatch(editPost(post));
+     // .then(() => dispatch(addPost(post)))
+     // .then(response => console.log('Success:', response))
+     // .catch(
+     //    error =>
+     //     console.error("ERROR: failed to add post - " + error)
+     //  );
+   }
+  }

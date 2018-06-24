@@ -33,6 +33,16 @@ export const addPost = (body) =>
     body: JSON.stringify(body)
   }).then(res => res.json())
 
+  export const editPost = (post) =>
+    fetch(`${api}/posts/${post.id}`, {
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(post)
+    }).then(res => res.json())
+
   export const getAllCommentsForPost = (post) =>
      fetch(`${api}/posts/${post.id}/comments`, { headers })
        .then(res => res.json())

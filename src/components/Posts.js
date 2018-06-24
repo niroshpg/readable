@@ -1,5 +1,10 @@
 import React, { Component }  from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+
+import { Icon } from 'react-icons-kit'
+import {ic_add} from 'react-icons-kit/md/ic_add'
+
 
 import PostTile from './PostTile'
 import '../App.css';
@@ -62,6 +67,11 @@ class Posts extends Component {
                 <option value="byVoteScoreA">accending</option>
                <option value="byTimestamp">latest</option>
              </select>
+             <p>Add Post: </p>
+             <Link to={`/create`}>
+                 <Icon icon={ic_add} size={40} style={{"color":"green"}} />
+             </Link>
+
           </section>
           <section className="list-pannel">
               <ul >

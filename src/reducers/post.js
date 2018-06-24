@@ -1,5 +1,6 @@
 import {
   ADD_POST,
+  EDIT_POST,
   REMOVE_POST,
   INC_VOTE,
   DEC_VOTE,
@@ -15,6 +16,11 @@ const postReducer = (state = 0, action) => {
         ...state,
         [id]: { id,timestamp,title,body,author,category,voteScore,deleted }
       }
+    case EDIT_POST:
+        return {
+          ...state,
+          [id]: { id,timestamp,title,body,author,category,voteScore,deleted }
+        }
     case REMOVE_POST :
       return {
         ...state,

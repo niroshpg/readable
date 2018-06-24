@@ -1,6 +1,9 @@
 import React, { Component }  from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Icon } from 'react-icons-kit'
+import {ic_home} from 'react-icons-kit/md/ic_home'
+
 import '../App.css';
 
 import * as ReadableAPI from '../utils/ReadableAPI';
@@ -42,7 +45,14 @@ class ToolBar extends Component {
         <div>
           <nav className='nav-bar'>
             <ul>
+            <li><Link to={`/`}>
+
+                <Icon icon={ic_home} size={20}  />
+
+            </Link> </li>
                {
+
+
                   cat.map((category)=>{
                     return  <li key={category}>
                           <Link to={`/${category}`}>{category}</Link>
